@@ -61,17 +61,44 @@ if uploaded_files:
             st.write("**Anomaly Detection Applied**: -1 = Anomaly, 1 = Normal")
             st.write(df.head())
 
-         # 🧠 AI-Powered Data Insights (Using Google Gemini AI)
+        #  # 🧠 AI-Powered Data Insights (Using Google Gemini AI)
+        # if st.button("🧠 Get AI-Powered Data Summary"):
+        #     try:
+        #         model = genai.GenerativeModel("gemini-pro")  # Load Gemini model
+        #         prompt = f"Summarize the key insights about this dataset: {df.describe()}"
+        #         response = model.generate_content(prompt)  # Correct AI response method
+        #         st.write("**AI Insights:**")
+        #         st.write(response.text)  # Display Google Gemini AI response
+        #     except Exception as e:
+        #         st.error(f"Error with AI analysis: {e}")
+        
+        
+        # 🧠 AI-Powered Data Insights (Using Google Gemini AI)
         if st.button("🧠 Get AI-Powered Data Summary"):
             try:
-                model = genai.GenerativeModel("gemini-pro")  # Load Gemini model
-                prompt = f"Summarize the key insights about this dataset: {df.describe()}"
-                response = model.generate_content(prompt)  # Correct AI response method
-                st.write("**AI Insights:**")
-                st.write(response.text)  # Display Google Gemini AI response
+                if df.empty:
+                    st.warning("Dataset is empty! Upload a valid file.")
+                else:
+                    model = genai.GenerativeModel("gemini-pro")
+                    
+                    # Ensure numerical data for summary
+                    numeric_df = df.select_dtypes(include=["number"])
+                    if numeric_df.empty:
+                        st.warning("No numeric columns found in the dataset. AI analysis may not be useful.")
+                    else:
+                        summary = numeric_df.describe().to_string()
+                        prompt = f"Summarize the key insights about this dataset: {summary}"
+                        
+                        response = model.generate_content(prompt)
+                        
+                        if hasattr(response, "text"):
+                            st.write("**AI Insights:**")
+                            st.write(response.text)
+                        else:
+                            st.error("AI response did not return text. Check the API settings.")
             except Exception as e:
                 st.error(f"Error with AI analysis: {e}")
-
+                            
 
         # Choose specific columns to keep or convert
         st.subheader("🔍 Column Selection and Conversion")
