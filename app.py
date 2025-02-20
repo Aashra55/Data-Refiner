@@ -9,7 +9,7 @@ import google.generativeai as genai
 
 load_dotenv()
 
-api_key = os.getenv("GOOGLE_API_KEY")  # Get API key securely
+api_key = os.getenv("GOOGLE_API_KEY")  
 genai.configure(api_key=api_key)
 
 st.set_page_config(page_title="💿 Data Refiner",layout="wide") 
