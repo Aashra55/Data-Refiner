@@ -61,18 +61,6 @@ if uploaded_files:
             st.write("**Anomaly Detection Applied**: -1 = Anomaly, 1 = Normal")
             st.write(df.head())
 
-        #  # 🧠 AI-Powered Data Insights (Using Google Gemini AI)
-        # if st.button("🧠 Get AI-Powered Data Summary"):
-        #     try:
-        #         model = genai.GenerativeModel("gemini-pro")  # Load Gemini model
-        #         prompt = f"Summarize the key insights about this dataset: {df.describe()}"
-        #         response = model.generate_content(prompt)  # Correct AI response method
-        #         st.write("**AI Insights:**")
-        #         st.write(response.text)  # Display Google Gemini AI response
-        #     except Exception as e:
-        #         st.error(f"Error with AI analysis: {e}")
-        
-        
         # 🧠 AI-Powered Data Insights (Using Google Gemini AI)
         if st.button("🧠 Get AI-Powered Data Summary"):
             try:
